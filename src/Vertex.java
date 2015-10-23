@@ -1,5 +1,8 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MediaTracker;
 
 
 public class Vertex
@@ -11,19 +14,37 @@ public class Vertex
 	Edge[] AdjacencyList = new Edge[0];
 	int Width = 40, Height = 40;
 	int X = 0, Y = 0;
-	
+	boolean visited = false;
 	boolean Selected = false;
-
+	Image bgImage = null; 
+	int score = 0;
+	Font font1 = new Font("Serif", Font.BOLD, 14);
+	Font font2 = new Font("Monospaced", Font.BOLD, 20);
+	int level = 1;
 	public boolean isSelected() 
 	{
 		return Selected;
 	}
-
+	public void setScore(int pts)
+	{
+		score += pts;	
+	}
+	public int getScore()
+	{
+		return this.score;	
+	}
 	public void setSelected(boolean selected) 
 	{
 		Selected = selected;
 	}
+	public int getLevel()
+	{
+		return level;
+	}
+	public void updateGame()
+	{
 
+	}
 	public int getColorIndex()
 	{
 		return ColorIndex;
@@ -106,12 +127,14 @@ public class Vertex
 
 	public void paint(Graphics g)
 	{
+		g.setFont(font1);
+		g.setFont(font2);
+		g.setColor(Color.YELLOW);
+		g.drawString("The Current Score is: " + getScore(), 20, 40);
+		g.drawString("Level: " + getLevel(), 20, 20);
 		if( !Visible ) return;
-		
 		g.setColor( Colors[ColorIndex] );
-		
-		if( Selected ) g.setColor( Color.white );
-		
+		if( Selected ) g.setColor( Color.gray );
 		g.fillRect( X - ( Width / 2 ), Y - ( Height / 2 ),
 			Width, Height );
 		g.setColor( Color.black );
@@ -119,7 +142,7 @@ public class Vertex
 				Width, Height );
 		g.drawString( "" + VertexIndex, X - 6, Y + 6 );
 	}
-	
+ 
 	public boolean ClickedMe( int x, int y )
 	{
 		if( !Visible ) return( false );
@@ -134,6 +157,16 @@ public class Vertex
 		}
 
 		return( false );
+	}
+
+	public void setVisited(boolean b) {
+		// TODO Auto-generated method stub
+		this.visited= b;
+	}
+
+	public boolean isVisited() {
+		// TODO Auto-generated method stub
+		return this.visited;
 	}
 
 }
